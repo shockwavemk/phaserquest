@@ -58,14 +58,11 @@ app.get('/',function(req,res){
 var myArgs = require('optimist').argv;
 var mongoHost, mongoDBName;
 
-if(myArgs.heroku){ // --heroku flag to behave according to Heroku's specs
-    mongoHost = 'heroku_4tv68zls:'+myArgs.pass+'@ds141368.mlab.com:41368';
-    mongoDBName = 'heroku_4tv68zls';
-}else {
-    var mongoPort = (myArgs.mongoPort || 27017);
-    mongoHost = 'localhost:'+mongoPort;
-    mongoDBName = 'phaserQuest';
-}
+
+var mongoPort = (myArgs.mongoPort || 27017);
+mongoHost = 'mongo:'+mongoPort;
+mongoDBName = 'phaserQuest';
+
 
 server.listen(myArgs.p || process.env.PORT || 8081,function(){ // -p flag to specify port ; the env variable is needed for Heroku
     console.log('Listening on '+server.address().port);
