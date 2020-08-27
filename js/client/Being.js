@@ -6,7 +6,7 @@
  * E-mail: jerome.renaux@gmail.com
  */
 // Helper function to make a sprite object absorb all the properties of a provided JSON object; Object.assign() should work as well
-Phaser.Sprite.prototype.absorbProperties = function(object){
+Phaser.GameObjects.Sprite.prototype.absorbProperties = function(object){
     for (var key in object) {
         if (!object.hasOwnProperty(key)) continue;
         this[key] = object[key];
@@ -16,12 +16,12 @@ Phaser.Sprite.prototype.absorbProperties = function(object){
 // Being is the topmost class encompassing all "living" sprites, be it players, NPC or monsters (not items)
 function Being(x,y,key){
     // key is the string indicating which atlas to use
-    Phaser.Sprite.call(this, game, x,y,key); // Call to constructor of parent
+    Phaser.GameObjects.Sprite.call(this, game, x,y,key); // Call to constructor of parent
     this.speed = 0;
     this.destination = null;
     game.add.existing(this);
 }
-Being.prototype = Object.create(Phaser.Sprite.prototype); // Declares the inheritance relationship
+Being.prototype = Object.create(Phaser.GameObjects.Sprite.prototype); // Declares the inheritance relationship
 Being.prototype.constructor = Being;
 
 Being.prototype.setAnimations = function(object){

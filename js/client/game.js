@@ -14,12 +14,12 @@ var Game = {
     defaultOrientation: 4, // Face down by default
     playerSpeed: 120, // number of ms that the movement tween takes to cross one tile (the lower the faster)
     playerLife: 100, // Max health of a player
-    cursor: 'url(/assets/sprites/hand.png), auto', // image of the mouse cursor in normal circumstances
-    talkCursor: 'url(/assets/sprites/talk.png), auto', // image of the cursor when hovering NPC
-    lootCursor: 'url(/assets/sprites/loot.png), auto', // image of cursors when hovering loot
-    fightCursor: 'url(/assets/sprites/sword.png), auto', // image of cursor when hovering monster
-    markerPosition: new Phaser.Point(), // current position of the square marker indicating the highlighted tile
-    previousMarkerPosition: new Phaser.Point(), // previous position of that marker
+    cursor: 'url(https://game.martin-kramer.com/assets/sprites/hand.png), auto', // image of the mouse cursor in normal circumstances
+    talkCursor: 'url(https://game.martin-kramer.com/assets/sprites/talk.png), auto', // image of the cursor when hovering NPC
+    lootCursor: 'url(https://game.martin-kramer.com/assets/sprites/loot.png), auto', // image of cursors when hovering loot
+    fightCursor: 'url(https://game.martin-kramer.com/assets/sprites/sword.png), auto', // image of cursor when hovering monster
+    markerPosition: new Phaser.Geom.Point(), // current position of the square marker indicating the highlighted tile
+    previousMarkerPosition: new Phaser.Geom.Point(), // previous position of that marker
     cameraFollowing: true, // is the camera centered on the player
     mapWideningY: 54, // y coordinate (in tiles) of the region of the map above which the bounds of the world are wider
     speechBubbleCornerSize: 5, // size of the sprite used to make the corners of the speech bubbles
@@ -31,7 +31,7 @@ var Game = {
     maxChatLength: 300, // Max length of text to input in chat
     latency: 0, // Initial latency of the client; continuously updated by values from server
     charactersPool: {}, // Map of the players in the game, accessed by their player id
-    clickDelay: Phaser.Timer.SECOND * 0.2, // minimum time between player mouse clicks
+    clickDelay: Phaser.Time.Clock.SECOND * 0.2, // minimum time between player mouse clicks
     clickEnabled: true // bool used to check if the player has clicked faster than the click delay
 };
 // used to map the orientation of the player, stored as a number, to the actual name of the orientation
@@ -49,13 +49,13 @@ Game.init = function(){
 };
 
 Game.preload = function() {
-    game.load.tilemap('map', 'assets/maps/minimap_client.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.spritesheet('tileset', 'assets/tilesets/tilesheet.png',32,32);
-    game.load.atlasJSONHash('atlas4', 'assets/sprites/atlas4.png', 'assets/sprites/atlas4.json'); // Atlas of monsters
-    game.load.spritesheet('bubble', 'assets/sprites/bubble2.png',5,5); // tilesprite used to make speech bubbles
-    game.load.spritesheet('life', 'assets/sprites/lifelvl.png',5,18); // tilesprite used to make lifebar
-    game.load.audio('sounds','assets/audio/sounds.mp3','assets/audio/sounds.ogg'); // audio sprite of all sound effects
-    game.load.json('entities', 'assets/json/entities_client.json'); // Basically a list of the NPC, mapping their id to the key used in other JSON files
+    game.load.tilemap('map', 'https://game.martin-kramer.com/assets/maps/minimap_client.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.spritesheet('tileset', 'https://game.martin-kramer.com/assets/tilesets/tilesheet.png',32,32);
+    game.load.atlasJSONHash('atlas4', 'https://game.martin-kramer.com/assets/sprites/atlas4.png', 'assets/sprites/atlas4.json'); // Atlas of monsters
+    game.load.spritesheet('bubble', 'https://game.martin-kramer.com/assets/sprites/bubble2.png',5,5); // tilesprite used to make speech bubbles
+    game.load.spritesheet('life', 'https://game.martin-kramer.com/assets/sprites/lifelvl.png',5,18); // tilesprite used to make lifebar
+    game.load.audio('sounds','https://game.martin-kramer.com/assets/audio/sounds.mp3','assets/audio/sounds.ogg'); // audio sprite of all sound effects
+    game.load.json('entities', 'https://game.martin-kramer.com/assets/json/entities_client.json'); // Basically a list of the NPC, mapping their id to the key used in other JSON files
 };
 
 // Makes a map mapping the numerical id's of elements of a collection to their names (their names being the keys used to fetch relevant data from JSON files)

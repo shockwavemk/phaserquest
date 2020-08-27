@@ -1,0 +1,43 @@
+version: '2'
+services:
+  mongo:
+    image: 'mongo:3.4.4'
+    ports:
+      - '127.0.0.1:27017:27017'
+    volumes:
+      - 'mongo:/data/db'
+    labels:
+      - "traefik.enable=false"
+
+  phaserquest:
+    tty: true
+    stdin_open: true
+    depends_on:
+      - mongo
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: node server.js -p 80 --mongoServer mongo --waitForDatabase 5000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.game.rule=Host(`game.martin-kramer.com`)"
+      - "traefik.http.routers.game.entrypoints=websecure"
+      - "traefik.http.middlewares.game.headers.accesscontrolallowmethods=GET,OPTIONS,PUT"
+      - "traefik.http.middlewares.game.headers.accesscontrolalloworiginlist=https://martin-kramer.com,https://www.martin-kramer.com"
+      - "traefik.http.middlewares.game.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.game.headers.addvaryheader=true"
+      - "traefik.http.routers.game.middlewares=game"
+    volumes:
+      - './assets:/usr/src/app/assets'
+      - './js:/usr/src/app/js'
+      - './server.js:/usr/src/app/server.js'
+      - './package.json:/usr/src/app/package.json'
+      - './index.html:/usr/src/app/index.html'
+
+volumes:
+  mongo:
+
+networks:
+  default:
+    external:
+      name: infrastructure_default

@@ -5,13 +5,13 @@
 
 function Item(x,y,key){
     // key is a string indicating the atlas to use for the texture
-    Phaser.Sprite.call(this, game, x,y,key); // Call to constructor of parent
+    Phaser.GameObjects.Sprite.call(this, game, x,y,key); // Call to constructor of parent
     game.add.existing(this);
     this.events.onKilled.addOnce(function(item){
         item.recycle();
     },this);
 }
-Item.prototype = Object.create(Phaser.Sprite.prototype);
+Item.prototype = Object.create(Phaser.GameObjects.Sprite.prototype);
 Item.prototype.constructor = Item;
 
 Item.prototype.setUp = function(content,chest,inChest,visible,respawn,loot){
